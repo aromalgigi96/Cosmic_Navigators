@@ -1,6 +1,6 @@
-train: D:/Canada/Subjects/Semester -1/AIDI 1003_01_CAPSTONE TERM 1/Cosmic navigators/dataset/train_augmented/images
-val: D:/Canada/Subjects/Semester -1/AIDI 1003_01_CAPSTONE TERM 1/Cosmic navigators/dataset/valid_augmented/images
-test: D:/Canada/Subjects/Semester -1/AIDI 1003_01_CAPSTONE TERM 1/Cosmic navigators/dataset/test/images  
+train: D:/Canada/Subjects/Semester -1/AIDI_1003_01_CAPSTONE_TERM_1/Cosmic_Navigators_Final/dataset/train_augmented/images
+val: D:/Canada/Subjects/Semester -1/AIDI_1003_01_CAPSTONE_TERM_1/Cosmic_Navigators_Final/dataset/valid_augmented/images
+test: D:/Canada/Subjects/Semester -1/AIDI_1003_01_CAPSTONE_TERM_1/Cosmic_Navigators_Final/dataset/test/images
 
 nc: 5
 names: ["large_debris", "medium_debris", "rocket", "satellite", "small_debris"]
