@@ -16,7 +16,7 @@ print("Model Class Names:", model.names)
 # -------------------------------
 # 2. Run Inference on an Image
 # -------------------------------
-image_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\2.jpg"
+image_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\0f4028b28465e49a2046cd80fb0474e8_png_jpg.rf.6faa6f2f0c88f47446825152d701efcd.jpg"
 
 # Run inference with a confidence threshold of 0.5
 results = model.predict(source=image_path, conf=0.4)
