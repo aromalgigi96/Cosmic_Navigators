@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 # -------------------------------
 # 1. Load Your YOLOv8 Model
 # -------------------------------
-model_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\models\best.pt"
+model_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\runs\best.pt"
 model = YOLO(model_path)
 
 # Print the model's class names to verify (e.g., {0: 'large_debris', 1: 'medium_debris', ...})
@@ -26,10 +26,10 @@ print("Model Class Names:", model.names)
 # -------------------------------
 # 2. Run Inference on an Image
 # -------------------------------
-image_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\0ef70746a19e9aedd3938b7a95834127_png_jpg.rf.3880c4f6e9e647fdcb07b3a2197d7495.jpg"
+image_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\rocket-launch-67723_1280_jpg.rf.77eb5e515736e4e3418eddbdf273ab4e.jpg"
 
 # Run inference with a confidence threshold of 0.5
-results = model.predict(source=image_path, conf=0.2)
+results = model.predict(source=image_path, conf=0.1)
 
 # Print the overall results object
 print("Raw Results Object:", results)

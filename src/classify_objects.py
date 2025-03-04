@@ -11,7 +11,7 @@ from tensorflow.keras.models import load_model
 # -------------------------------
 # 1. Load Your YOLOv8 Model
 # -------------------------------
-yolo_model = YOLO(r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\models\best.pt")
+yolo_model = YOLO(r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\runs\best.pt")
 print("YOLO Model Class Names:", yolo_model.names)
 
 # -------------------------------
@@ -67,5 +67,5 @@ def detect_and_classify(image_path):
 # -------------------------------
 # 5. Run the Function on a Test Image
 # -------------------------------
-test_image = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\photos_2791_jpg.rf.5481f5427f8d8f927e83c3192f37df6d.jpg"
+test_image = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\s8_PNG.rf.93eb87f610a8de5f84ed95122086fa28.jpg"
 detect_and_classify(test_image)
