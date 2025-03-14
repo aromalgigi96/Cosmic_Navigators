@@ -14,15 +14,11 @@ from tensorflow.keras.models import load_model
 yolo_model = YOLO(r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\runs\best.pt")
 print("YOLO Model Class Names:", yolo_model.names)
 
-# -------------------------------
-# 2. Load Your CNN Classification Model
-# -------------------------------
+
 cnn_model = load_model(r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\models\cnn\debris_classifier.h5")
 class_names = ["large_debris", "medium_debris", "rocket", "satellite", "small_debris"]
 
-# -------------------------------
-# 3. Define the End-to-End Detection + Classification Function
-# -------------------------------
+
 def detect_and_classify(image_path):
     img = cv2.imread(image_path)
     results = yolo_model.predict(source=image_path, conf=0.3)
@@ -59,13 +55,11 @@ def detect_and_classify(image_path):
     plt.axis("off")
     plt.show()
 
-    # Optionally, save the annotated image:
+   
     output_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\photos_2736_jpg.rf.da632cb7162caf652be0d5233182e8af.jpg"
     cv2.imwrite(output_path, img)
     print("Annotated image saved to", output_path)
 
-# -------------------------------
-# 5. Run the Function on a Test Image
-# -------------------------------
-test_image = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\s8_PNG.rf.93eb87f610a8de5f84ed95122086fa28.jpg"
+
+test_image = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\0e82d1a8f6b6b4243795aa2561808ce4_png_jpg.rf.b1b23b51157ffbe5de97946ed1983c03.jpg"
 detect_and_classify(test_image)
