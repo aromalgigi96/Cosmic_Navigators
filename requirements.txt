@@ -1,10 +1,7 @@
-ultralytics
-opencv-python
-matplotlib
-numpy
-pandas
-torch
-torchvision
-tensorflow
-ipykernel
-jupyter
+fastapi==0.115.12
+numpy==2.0.2
+opencv-python-headless==4.11.0.86
+python-multipart==0.0.5
+tensorflow-cpu==2.18.0
+ultralytics==8.3.82
+uvicorn==0.34.0

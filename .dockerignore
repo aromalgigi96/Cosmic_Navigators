@@ -1,0 +1,26 @@
+# Python cache & compiled files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Folders not needed in the final image
+dataset/
+mlruns/
+notebooks/
+results/
+runs/
+video_result/
+
+# Git / local config files
+.git
+.gitattributes
+.gitignore
+
+# Node_modules or other caches in your frontend (optional if not building in Docker)
+frontend/node_modules/
+
+# Other local or temp files
+*.log
+*.cache

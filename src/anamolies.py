@@ -11,7 +11,7 @@ from tensorflow.keras.models import load_model
 class_names = ["large_debris", "medium_debris", "rocket", "satellite", "small_debris"]
 
 # Predefined colors for each class (BGR format)
-# Feel free to adjust or add more colors
+
 CLASS_COLORS = {
     "large_debris":  (0, 255, 0),    # green
     "medium_debris": (255, 0, 0),    # blue
@@ -100,7 +100,7 @@ def process_image_with_style(image_path, detection_model, classification_model,
         final_label = f"{detect_class_name}/{refined_class_name} {conf_str}"
 
         # Determine color
-        # We'll pick the color for the bounding box based on the detection class
+       
         color = CLASS_COLORS.get(detect_class_name, (0, 255, 0))  # default green if not found
 
         # Draw bounding box
@@ -131,6 +131,6 @@ if __name__ == "__main__":
     cnn_model = load_model(r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\models\cnn\debris_classifier.h5")
 
     # Process an example image
-    image_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\0fd573764fa41dd591236d879eae0280_png_jpg.rf.0fe33c8b4a9c57babc807d17d387cd04.jpg"
+    image_path = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\-30_png_jpg.rf.6947af000ca40f01104b1eba7f7a9a59.jpg"
     process_image_with_style(image_path, yolo_model, cnn_model,
                              expected_detection_count=3, detection_count_tolerance=2)

@@ -8,9 +8,8 @@ from ultralytics import YOLO
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 
-# -------------------------------
+
 # 1. Load Your YOLOv8 Model
-# -------------------------------
 yolo_model = YOLO(r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\runs\best.pt")
 print("YOLO Model Class Names:", yolo_model.names)
 
@@ -21,7 +20,7 @@ class_names = ["large_debris", "medium_debris", "rocket", "satellite", "small_de
 
 def detect_and_classify(image_path):
     img = cv2.imread(image_path)
-    results = yolo_model.predict(source=image_path, conf=0.3)
+    results = yolo_model.predict(source=image_path, conf=0.2)
     boxes_data = results[0].boxes.data
 
     for box in boxes_data:
@@ -46,9 +45,9 @@ def detect_and_classify(image_path):
         cv2.putText(img, label_text, (int(x1), int(y1)-10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
 
-    # -------------------------------
+    
     # 4. Display the Annotated Image using Matplotlib
-    # -------------------------------
+    
     plt.figure(figsize=(10, 6))
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     plt.title("Detections + Classifications")
@@ -61,5 +60,5 @@ def detect_and_classify(image_path):
     print("Annotated image saved to", output_path)
 
 
-test_image = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\0e82d1a8f6b6b4243795aa2561808ce4_png_jpg.rf.b1b23b51157ffbe5de97946ed1983c03.jpg"
+test_image = r"D:\Canada\Subjects\Semester -1\AIDI 1003_01_CAPSTONE TERM 1\Cosmic_Navigators_Final\dataset\test\images\-30_png_jpg.rf.6947af000ca40f01104b1eba7f7a9a59.jpg"
 detect_and_classify(test_image)

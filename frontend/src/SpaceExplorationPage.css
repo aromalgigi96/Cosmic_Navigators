@@ -1,0 +1,144 @@
+/* Overall page background and layout */
+.explore-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #1a202c, #581c87, #1a202c); /* Dark purple gradient */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation Header */
+.explore-nav {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 16px 0;
+}
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.back-button {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.back-button:hover {
+  color: #c084fc;
+}
+.page-title {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Main container for content */
+.explore-container {
+  flex: 1;
+  padding: 32px 0;
+}
+.explore-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* On larger screens, place the two cards side by side */
+@media (min-width: 768px) {
+  .explore-wrapper {
+    flex-direction: row;
+  }
+}
+
+/* Shared custom card style for both left (upload) and right (annotated) columns */
+.custom-card {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 24px;
+  flex: 1;
+  color: #fff; /* White text */
+}
+
+/* Left Card: Upload */
+.upload-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.upload-dashed-area {
+  border: 2px dashed #c084fc;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  color: #fff;
+}
+.upload-dashed-area:hover {
+  border-color: #a855f7;
+}
+.upload-icon {
+  color: #c084fc;
+  margin-bottom: 12px;
+}
+.upload-text {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.upload-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.status-message {
+  color: #c084fc;
+  text-align: center;
+  margin: 0;
+}
+
+/* Right Card: Annotated Result */
+.annotated-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.no-image-box {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  text-align: center;
+  padding: 48px;
+  color: #aaa;
+}
+.annotated-result-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px; /* Adjust if needed */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.annotated-result {
+  max-width: 100%;
+  max-height: 400px; /* Adjust as needed */
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* New style for video stream rendered as an image */
+.annotated-video-img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
