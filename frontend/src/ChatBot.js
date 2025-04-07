@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './ChatBot.css';
 
-const OPENAI_API_KEY = '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';
-// We'll use NASA's APOD key for APOD queries, but for space debris, no key is required
-const NASA_API_KEY = 'O9HtEIY3f2P5gYvSgSKNVcuVcOOTDlbeBn87etie';
+// NASA API key (using your provided key or DEMO_KEY for testing)
+const NASA_API_KEY = 'UFYA5HcAkCUFKj6wnJVg4WJSEIlPQ0Jj7WGI1of7';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,27 +10,20 @@ const ChatBot = () => {
     {
       id: Date.now(),
       sender: 'bot',
-      text: "Hello! I'm your NASA Assistant. Ask me anything about NASA—try 'space debris', 'APOD', or 'Mars Rover'."
+      text: "Hello! I'm your NASA Assistant. Ask me about NASA—try 'APOD', 'space debris', 'Mars Rover', or 'news'."
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  // We'll store the last fetched NASA data for follow-up queries
-  const [lastNASAData, setLastNASAData] = useState(null);
 
   // Fetch APOD data from NASA
   const fetchAPOD = async () => {
     try {
       const res = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`);
       const data = await res.json();
-      setLastNASAData({ type: 'apod', ...data });
-      return {
-        text: `NASA APOD: ${data.title}\n\n${data.explanation}`,
-        imageUrl: data.url
-      };
+      return `NASA APOD - ${data.title}:\n${data.explanation}\nImage URL: ${data.url}`;
     } catch (error) {
-      return { text: "I'm having trouble fetching NASA APOD data.", imageUrl: null };
+      return "I'm having trouble fetching NASA APOD data.";
     }
   };
 
@@ -44,75 +36,77 @@ const ChatBot = () => {
       if (data.collection && data.collection.items && data.collection.items.length > 0) {
         const firstItem = data.collection.items[0];
         const itemData = firstItem.data && firstItem.data[0] ? firstItem.data[0] : {};
-        const itemLink = firstItem.links && firstItem.links[0] ? firstItem.links[0].href : null;
-       
-        setLastNASAData({ type: 'debris', title: itemData.title || "Space Debris", explanation: itemData.description || "No description available.", imageUrl: itemLink });
-        return {
-          text: `NASA Space Debris:\nTitle: ${itemData.title || "Unknown"}\n\n${itemData.description || "No description available."}`,
-          imageUrl: itemLink
-        };
+        return `NASA Space Debris - ${itemData.title || "Unknown"}:\n${itemData.description || "No description available."}`;
       } else {
-        return { text: "No space debris images found.", imageUrl: null };
+        return "No space debris images found.";
       }
     } catch (error) {
-      return { text: "Error fetching space debris data.", imageUrl: null };
+      return "Error fetching space debris data.";
     }
   };
 
-  // Fallback ChatGPT call
-  const fetchChatGPTResponse = async (prompt) => {
+  // Fetch Mars rover photo data from NASA
+  const fetchMarsRoverPhoto = async () => {
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${OPENAI_API_KEY}`
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [
-            { role: "system", content: "You are a knowledgeable NASA assistant. Answer questions about NASA in a friendly and concise manner." },
-            { role: "user", content: prompt }
-          ],
-          temperature: 0.7,
-          max_tokens: 200
-        })
-      });
-      const data = await response.json();
-      return data.choices[0].message.content;
+      const res = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/latest_photos?api_key=${NASA_API_KEY}`);
+      const data = await res.json();
+      if (data.latest_photos && data.latest_photos.length > 0) {
+        const photo = data.latest_photos[0];
+        return `Mars Rover Photo on ${photo.earth_date}:\n${photo.img_src}`;
+      }
+      return "No Mars rover photos found.";
     } catch (error) {
-      return "I'm having trouble accessing the ChatGPT API right now.";
+      return "Error fetching Mars rover photos.";
     }
   };
 
-  // Handle user message submission
+  // Fetch NASA news using a free RSS-to-JSON converter
+  const fetchNasaNews = async () => {
+    try {
+      // Using a free RSS-to-JSON service to convert NASA's Breaking News RSS feed into JSON
+      const rssUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://www.nasa.gov/rss/dyn/breaking_news.rss";
+      const res = await fetch(rssUrl);
+      const data = await res.json();
+      if (data.items && data.items.length > 0) {
+        const topItem = data.items[0];
+        return `Latest NASA News: ${topItem.title}\nRead more: ${topItem.link}`;
+      } else {
+        return "No recent NASA news found.";
+      }
+    } catch (error) {
+      return "Error fetching NASA news.";
+    }
+  };
+
+  // Handle user message submission with flexible keyword matching
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
     setLoading(true);
+
+    // Add the user's message
     const userMsg = { id: Date.now(), sender: 'user', text: inputMessage };
     setMessages(prev => [...prev, userMsg]);
-    const lowerInput = inputMessage.toLowerCase();
-    let prompt = inputMessage;
-    setInputMessage('');
+    
+    // Convert input to lowercase and remove punctuation for robust matching
+    let lowerInput = inputMessage.toLowerCase();
+    lowerInput = lowerInput.replace(/[^a-z0-9 ]/g, ' ');
 
-    
-    if (lowerInput.includes("apod") || lowerInput.includes("picture")) {
-      // Fetch APOD data
-      const apodData = await fetchAPOD();
-      prompt += "\n\n" + apodData.text;
-      
+    let botResponse = "";
+    if (lowerInput.includes("apod") || lowerInput.includes("picture of the day")) {
+      botResponse = await fetchAPOD();
     } else if (lowerInput.includes("space debris")) {
-      // Fetch a space debris image from NASA's library
-      const debrisData = await fetchSpaceDebrisImage();
-      prompt += "\n\n" + debrisData.text;
-    } else if (lowerInput.includes("explain this") && lastNASAData) {
-      prompt = `Please provide more details about "${lastNASAData.title}": ${lastNASAData.explanation}`;
+      botResponse = await fetchSpaceDebrisImage();
+    } else if (lowerInput.includes("mars rover") || lowerInput.includes("mars")) {
+      botResponse = await fetchMarsRoverPhoto();
+    } else if (lowerInput.includes("news")) {
+      botResponse = await fetchNasaNews();
+    } else {
+      botResponse = "I'm sorry, I can only answer questions related to NASA, such as APOD, space debris, Mars Rover, or news.";
     }
-    
-    // Get ChatGPT response using the prompt
-    const botReply = await fetchChatGPTResponse(prompt);
-    const botMsg = { id: Date.now() + 1, sender: 'bot', text: botReply };
+
+    // Add the bot's response to the conversation
+    const botMsg = { id: Date.now() + 1, sender: 'bot', text: botResponse };
     setMessages(prev => [...prev, botMsg]);
     setLoading(false);
   };
@@ -129,16 +123,10 @@ const ChatBot = () => {
         </div>
         <div className="chat-messages">
           {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`message ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}
-            >
+            <div key={msg.id} className={`message ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}>
               {msg.text.split('\n').map((line, i) => (
                 <p key={i} style={{ margin: 0 }}>{line}</p>
               ))}
-              {msg.imageUrl && (
-                <img src={msg.imageUrl} alt="NASA Data" className="message-image" />
-              )}
             </div>
           ))}
           {loading && <p style={{ margin: 0, color: '#c084fc' }}>Loading...</p>}

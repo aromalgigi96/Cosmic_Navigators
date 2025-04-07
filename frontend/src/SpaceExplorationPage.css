@@ -1,7 +1,7 @@
 /* Overall page background and layout */
 .explore-page {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #1a202c, #581c87, #1a202c); /* Dark purple gradient */
+  background: linear-gradient(to bottom right, #1a202c, #581c87, #1a202c);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@
   border-radius: 8px;
   padding: 24px;
   flex: 1;
-  color: #fff; /* White text */
+  color: #fff;
 }
 
 /* Left Card: Upload */
@@ -122,7 +122,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px; /* Adjust if needed */
+  min-height: 300px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 16px;
@@ -130,7 +130,7 @@
 }
 .annotated-result {
   max-width: 100%;
-  max-height: 400px; /* Adjust as needed */
+  max-height: 400px;
   object-fit: contain;
   border-radius: 8px;
 }
@@ -141,4 +141,20 @@
   max-height: 400px;
   object-fit: contain;
   border-radius: 8px;
+}
+
+/* New styles for file preview inside the upload dashed area */
+.file-preview-image {
+  display: block;
+  margin: 12px auto 0 auto;
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.file-preview-video {
+  margin-top: 12px;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
 }
